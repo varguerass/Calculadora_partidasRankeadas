@@ -1,30 +1,37 @@
-const vitorias = 10;
-const derrotas = 5;
+const readline = require("readline");
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-function CalcularRAnk(vitorias, derrotas) {
- let resultado = vitorias - derrotas;
- return resultado;
+function calcularSaldo(vitorias, derrotas) {
+    return vitorias - derrotas;
 }
 
-function ExibirRank() {
-    let resultado = CalcularRAnk(vitorias, derrotas);
-    if (resultado <= 10) {
-        return "Ferro";
-    } else if (11 <= resultado && resultado <= 20) {
-        return "Bronze";
-    } else if (21 <= resultado && resultado <= 50) {
-        return "Prata";
-    } else if (51 <= resultado && resultado <= 80) {
-        return "Ouro";
-    } else if (81 <= resultado && resultado <= 90) {
-        return "Diamante";
-    } else if (91 <= resultado && resultado <= 100) {
-        return "Lendário";
-    } else {
-        return "Imortal";
-    }
+function obterRank(saldo) {
+    if (saldo <= 10) return "Ferro";
+    if (saldo <= 20) return "Bronze";
+    if (saldo <= 50) return "Prata";
+    if (saldo <= 80) return "Ouro";
+    if (saldo <= 90) return "Diamante";
+    if (saldo <= 100) return "Lendário";
+    return "Imortal";
 }
 
-let rank = ExibirRank(CalcularRAnk(vitorias, derrotas));
-console.log("O Herói tem de saldo de " + CalcularRAnk(vitorias, derrotas) + " vitórias e está no nível de " + rank);
+rl.question("Digite o número de vitórias: ", (v) => {
+    rl.question("Digite o número de derrotas: ", (d) => {
+
+        const vitorias = Number(v);
+        const derrotas = Number(d);
+
+        const saldo = calcularSaldo(vitorias, derrotas);
+        const rank = obterRank(saldo);
+
+        console.log(
+            `O Herói tem saldo de ${saldo} vitórias e está no nível ${rank}`
+        );
+
+        rl.close();
+    });
+});
